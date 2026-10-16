@@ -15,6 +15,7 @@ import { diffDays, formatDay, monthStart, shiftMonth } from '@/lib/cycle/dates';
 export default function CalendarPage() {
   const { profile, status, cycles, today, logPeriod, deleteCycle } = useApp();
   const [cursor, setCursor] = useState(today);
+  const [dir, setDir] = useState<1 | -1>(1);
   const [logging, setLogging] = useState(false);
   const [initialStart, setInitialStart] = useState<string | undefined>(undefined);
 
@@ -26,6 +27,11 @@ export default function CalendarPage() {
     month: 'long',
     year: 'numeric',
   }).format(new Date(`${monthStart(cursor)}T00:00:00Z`));
+
+  function goMonth(delta: 1 | -1) {
+    setDir(delta);
+    setCursor((c) => shiftMonth(c, delta));
+  }
 
   function openLog(start?: string) {
     setInitialStart(start);
@@ -49,17 +55,18 @@ export default function CalendarPage() {
         className="rounded-card bg-surface p-5 shadow-pill"
       >
         <div className="mb-4 flex items-center justify-between">
-          <IconButton label="Previous month" onClick={() => setCursor((c) => shiftMonth(c, -1))}>
+          <IconButton label="Previous month" onClick={() => goMonth(-1)}>
             <ChevronLeft size={20} />
           </IconButton>
           <h2 className="font-serif text-[19px] font-semibold text-burgundy-deep">{monthLabel}</h2>
-          <IconButton label="Next month" onClick={() => setCursor((c) => shiftMonth(c, 1))}>
+          <IconButton label="Next month" onClick={() => goMonth(1)}>
             <ChevronRight size={20} />
           </IconButton>
         </div>
 
         <CalendarMonth
           cursor={cursor}
+          dir={dir}
           today={today}
           status={status}
           cycles={cycles}

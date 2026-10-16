@@ -7,6 +7,7 @@ import { useApp } from '@/app/providers';
 import { AmberPill } from '@/components/amber-pill';
 import { EnergyChart } from '@/components/energy-chart';
 import { StaggerPage, fadeUp } from '@/components/motion';
+import { PhaseCharacter } from '@/components/phase-character';
 import { MEDICAL_DISCLAIMER, PHASE_CONTENT, PHASE_ORDER } from '@/lib/cycle/content';
 import { addDays, diffDays, formatDay, relativeDay } from '@/lib/cycle/dates';
 import type { CycleStatus } from '@/lib/cycle/types';
@@ -45,17 +46,22 @@ export default function InsightsPage() {
       <motion.section
         variants={fadeUp}
         aria-label={`About the ${content.name} phase`}
-        className={`glass-tile tile-${status.phase} animate-drift-slow rounded-tile p-6`}
+        className={`glass-tile tile-${status.phase} animate-drift-slow overflow-hidden rounded-tile p-6`}
       >
-        <p className="flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.14em] text-burgundy-deep/70">
-          <span aria-hidden className="h-2 w-2 animate-pulse-dot rounded-full bg-burgundy-deep" />
-          {content.name} phase · Day {status.cycleDay}
-        </p>
-        <h2 className="text-balance mt-2 font-serif text-[24px] font-semibold leading-snug text-burgundy-deep">
-          {before}
-          {content.highlight}
-          {after}
-        </h2>
+        <div className="flex items-start justify-between gap-4">
+          <div className="min-w-0">
+            <p className="flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.14em] text-burgundy-deep/70">
+              <span aria-hidden className="h-2 w-2 animate-pulse-dot rounded-full bg-burgundy-deep" />
+              {content.name} phase · Day {status.cycleDay}
+            </p>
+            <h2 className="text-balance mt-2 font-serif text-[24px] font-semibold leading-snug text-burgundy-deep">
+              {before}
+              {content.highlight}
+              {after}
+            </h2>
+          </div>
+          <PhaseCharacter phase={status.phase} size={92} />
+        </div>
         <p className="mt-2 text-[14px] leading-relaxed text-burgundy-deep/85">{content.why}</p>
         <p className="mt-1 text-[14px] leading-relaxed text-burgundy-deep/85">{content.suggestion}</p>
 
@@ -99,6 +105,30 @@ export default function InsightsPage() {
                 style={{ backgroundColor: PHASE_CONTENT[p].color }}
               />
               {PHASE_CONTENT[p].name}
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      {/* Meet your phases — the character of each phase */}
+      <motion.section
+        variants={fadeUp}
+        aria-label="Meet your phases"
+        className="rounded-card bg-surface p-5 shadow-pill"
+      >
+        <h2 className="font-serif text-[19px] font-semibold text-burgundy-deep">Meet your phases</h2>
+        <p className="mt-0.5 text-[13px] text-muted">She moves through all four with you.</p>
+        <ul className="mt-4 grid grid-cols-4 gap-2">
+          {PHASE_ORDER.map((p) => (
+            <li key={p} className="flex flex-col items-center gap-1.5">
+              <motion.div whileTap={{ scale: 0.88, rotate: -4 }} transition={{ type: 'spring', stiffness: 400, damping: 15 }}>
+                <PhaseCharacter phase={p} size={64} rounded="rounded-[20px]" />
+              </motion.div>
+              <span
+                className={`text-center text-[11px] font-semibold ${p === status.phase ? 'text-burgundy' : 'text-muted'}`}
+              >
+                {PHASE_CONTENT[p].name}
+              </span>
             </li>
           ))}
         </ul>

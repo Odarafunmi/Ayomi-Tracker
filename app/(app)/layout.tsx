@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, type ReactNode } from 'react';
 
 import { FloatingNav } from '@/components/floating-nav';
+import { PointerGlow } from '@/components/pointer-glow';
 import { useApp } from '@/app/providers';
 
 /**
@@ -56,8 +57,11 @@ export default function AppShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="relative min-h-screen">
+      <PointerGlow />
       <FloatingNav />
-      <main className="mx-auto w-full max-w-md px-4 pb-32 pt-6 md:pt-24">{children}</main>
+      <main className="relative z-10 mx-auto w-full max-w-md px-4 pb-32 pt-6 md:pt-24">
+        {children}
+      </main>
     </div>
   );
 }

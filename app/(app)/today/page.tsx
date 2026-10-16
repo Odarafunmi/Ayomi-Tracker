@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { CirclePlus } from 'lucide-react';
 import { useState } from 'react';
 
@@ -47,10 +47,12 @@ export default function TodayPage() {
         </h1>
       </motion.header>
 
-      {/* Irregularity alerts — calm, dismissible. */}
-      {visibleAlerts.map((alert) => (
-        <AlertBanner key={alert.id} alert={alert} onDismiss={() => dismissAlert(alert.id)} />
-      ))}
+      {/* Irregularity alerts — calm, dismissible, swipeable. */}
+      <AnimatePresence>
+        {visibleAlerts.map((alert) => (
+          <AlertBanner key={alert.id} alert={alert} onDismiss={() => dismissAlert(alert.id)} />
+        ))}
+      </AnimatePresence>
 
       {/* Hero dial */}
       <motion.div variants={fadeUp} className="pt-2">

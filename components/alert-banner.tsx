@@ -19,11 +19,18 @@ export function AlertBanner({
   return (
     <motion.section
       role="status"
-      aria-label={alert.title}
+      aria-label={`${alert.title}. Swipe sideways or use the close button to dismiss.`}
       initial={{ y: -24, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
+      exit={{ x: 120, opacity: 0 }}
       transition={{ type: 'spring', stiffness: 320, damping: 22 }}
-      className="flex items-start gap-3 rounded-[24px] bg-surface p-4 shadow-glow"
+      drag="x"
+      dragConstraints={{ left: 0, right: 0 }}
+      dragElastic={0.6}
+      onDragEnd={(_, info) => {
+        if (Math.abs(info.offset.x) > 80) onDismiss();
+      }}
+      className="flex touch-pan-y cursor-grab items-start gap-3 rounded-[24px] bg-surface p-4 shadow-glow active:cursor-grabbing"
     >
       <span
         aria-hidden

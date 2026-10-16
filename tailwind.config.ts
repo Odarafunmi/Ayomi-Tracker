@@ -31,11 +31,11 @@ const config: Config = {
       borderRadius: { card: '32px', tile: '28px' },
       boxShadow: {
         glow: '0 12px 32px -12px rgb(109 26 54 / .30)',
-        pill: '0 8px 24px -10px rgb(109 26 54 / .25)',
+        pill: '0 10px 28px -12px rgb(109 26 54 / .28)',
         'nav-active': '0 8px 20px -6px rgb(109 26 54 / .55)',
       },
       backgroundImage: {
-        canvas: 'linear-gradient(160deg, #F8F0E3 0%, #F2D6CF 100%)',
+        canvas: 'linear-gradient(160deg, #FCFAF6 0%, #F6EEE3 100%)',
         anchor: 'linear-gradient(145deg, #3A0C1C 0%, #6D1A36 100%)',
       },
       keyframes: {

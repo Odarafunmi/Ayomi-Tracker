@@ -35,7 +35,7 @@ export function FloatingNav() {
               aria-label={label}
               aria-current={active ? 'page' : undefined}
               title={label}
-              className="relative flex h-11 w-11 items-center justify-center rounded-full"
+              className="relative flex h-11 w-11 items-center justify-center rounded-full transition-transform duration-150 active:scale-85"
             >
               {active && (
                 <motion.span

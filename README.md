@@ -64,9 +64,10 @@ Covered by 24 unit tests in `lib/cycle/engine.test.ts` (`npm test`).
 
 ## Design system (v2 — Burgundy & Cream)
 
-60 % cream canvas · 30 % burgundy anchor · 10 % interactive phase colours.
-Tokens live in `tailwind.config.ts`; glass-tile gradients, striped progress and
-reduced-motion rules in `app/globals.css`.
+An almost-white warm canvas (`#FCFAF6 → #F6EEE3`) for a clean, airy feel; 30 %
+burgundy anchor; 10 % interactive phase colours. Tokens live in
+`tailwind.config.ts`; glass-tile gradients, striped progress and reduced-motion
+rules in `app/globals.css`.
 
 | Token | Hex | Use |
 |---|---|---|
@@ -86,6 +87,20 @@ cycle day), **2×2 glass phase tiles** (current phase enlarged, ringed, drifting
 bar**, **floating cream nav pill**, and calm pill **alert banners**. Motion follows the
 guide — staggered fade-ups (60 ms / 500 ms, `cubic-bezier(.22,1,.36,1)`), 1.2 s dial
 sweep, press → 0.97, and ambient loops disabled under `prefers-reduced-motion`.
+
+### Interactive layer
+
+- **Scrubbable cycle dial** — drag the arc (or use arrow keys; it is a real
+  `role="slider"`) to preview the phase of any day; it springs back to today.
+- **Phase tiles that swap** — tap any small tile and it springs into the hero slot
+  (layout animation) with its own character illustration.
+- **Phase characters** — four hand-consistent flat illustrations
+  (`public/characters/`, one per phase) that float gently and wave on hover.
+- **Pointer-parallax ambient glow**, hover **tilt** on the tiles,
+  **swipe-to-dismiss** alert banners, month **slide + staggered cell pops** in the
+  calendar, spring-knob toggles, tap-squash nav icons.
+- All loops are transform/opacity-only and switch off under
+  `prefers-reduced-motion`; interactive controls stay keyboard-accessible.
 
 ## Supabase setup (accounts, sync, email reminders)
 

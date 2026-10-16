@@ -63,7 +63,7 @@ export function IconButton({
   );
 }
 
-/** Soft switch used in settings. */
+/** Soft switch used in settings — the knob travels on a playful spring. */
 export function Toggle({
   checked,
   onChange,
@@ -74,21 +74,23 @@ export function Toggle({
   label: string;
 }) {
   return (
-    <button
+    <motion.button
       type="button"
       role="switch"
       aria-checked={checked}
       aria-label={label}
       onClick={() => onChange(!checked)}
+      whileTap={{ scale: 0.92 }}
       className={`relative h-7 w-12 shrink-0 rounded-full transition-colors duration-200 ${
         checked ? 'bg-burgundy' : 'bg-cream-deep'
       }`}
     >
-      <span
-        className={`absolute top-0.5 h-6 w-6 rounded-full bg-surface shadow transition-transform duration-200 ${
-          checked ? 'translate-x-[22px]' : 'translate-x-0.5'
-        }`}
+      <motion.span
+        initial={false}
+        animate={{ x: checked ? 22 : 2 }}
+        transition={{ type: 'spring', stiffness: 550, damping: 28 }}
+        className="absolute left-0 top-0.5 h-6 w-6 rounded-full bg-surface shadow"
       />
-    </button>
+    </motion.button>
   );
 }

@@ -10,6 +10,7 @@ import { useApp } from '@/app/providers';
 import { AmberPill } from '@/components/amber-pill';
 import { EASE_OUT } from '@/components/motion';
 import { NumberStepper } from '@/components/number-stepper';
+import { PhaseCharacter } from '@/components/phase-character';
 import { PrimaryButton, SecondaryButton } from '@/components/ui';
 import { MEDICAL_DISCLAIMER } from '@/lib/cycle/content';
 import { addDays, todayISO } from '@/lib/cycle/dates';
@@ -116,7 +117,17 @@ export default function OnboardingPage() {
   ];
 
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-md flex-col px-5 pb-10 pt-8">
+    <main className="relative mx-auto flex min-h-screen w-full max-w-md flex-col overflow-hidden px-5 pb-10 pt-8">
+      {/* Ambient floating blobs */}
+      <div
+        aria-hidden
+        className="animate-drift-slow pointer-events-none absolute -right-16 top-24 h-48 w-48 rounded-full bg-phase-luteal/15 blur-2xl"
+      />
+      <div
+        aria-hidden
+        className="animate-drift-slower pointer-events-none absolute -left-20 top-1/2 h-56 w-56 rounded-full bg-phase-ovulation/15 blur-2xl"
+      />
+
       {/* Brand + progress */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
@@ -155,7 +166,15 @@ export default function OnboardingPage() {
             </h1>
 
             {step === 0 && (
-              <div className="mt-5 space-y-4">
+              <div className="mt-6 space-y-4">
+                <motion.div
+                  className="flex justify-center"
+                  initial={{ opacity: 0, scale: 0.85, y: 12 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  transition={{ delay: 0.2, type: 'spring', stiffness: 260, damping: 20 }}
+                >
+                  <PhaseCharacter phase="follicular" size={148} rounded="rounded-[32px]" />
+                </motion.div>
                 <p className="text-[15px] leading-relaxed text-muted">
                   Ayomi predicts your period, explains each hormone phase, and gently flags
                   anything unusual — so your cycle never catches you off guard again.
